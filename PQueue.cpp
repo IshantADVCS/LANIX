@@ -28,7 +28,30 @@
 */
 void PQueue::push(void *item, int priority)
 {
-	/* Your code here */
+	node* tent  = new node;
+	tent -> priority = priority;
+	tent -> data = item;
+	tent -> link = NULL;
+
+
+
+	if (front == NULL || priority > front -> priority){
+		tent -> link = front;
+		front = tent;
+		return;
+	}
+
+	node* avail = front;
+	
+
+
+	while (avail -> link != NULL && avail ->link -> priority >= priority){
+		avail = avail -> link;
+	}
+
+	tent -> link = avail -> link;
+	avail -> link = tent;
+
 }
 
 /*
@@ -36,14 +59,24 @@ void PQueue::push(void *item, int priority)
  */
 void* PQueue::top()
 {
-	/* Your code here */
+	if (front == NULL) {
+		return NULL;
+	}
+
+	return front->data;
 }
 /*
  * Delete from Priority Queue
  */
 void PQueue::pop()
 {
-	/* Your code here */
+	if (front == NULL) {
+		return;
+	}
+	node* news = front;
+	front = front -> link;
+	delete news;
+
 }
 
 /*
@@ -52,10 +85,15 @@ void PQueue::pop()
 void PQueue::display()
 {
 
-	/* Your code here */
+	node* pra = front;
+
+
+	if (pra == NULL){
+		std::cout << "not full" << std::endl;
+	}
 	
 	/* Use the following out command for the data */
-	std::cout<<ptr->priority<<" "<<(char*)ptr->data<<std::endl;
+	std::cout<<pra->priority<<" "<<(char*)pra->data<<std::endl;
 
 }
 	
